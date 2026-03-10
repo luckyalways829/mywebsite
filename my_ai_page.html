@@ -1,0 +1,827 @@
+<html lang="zh-CN"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>詹曼 Gemma Zhan - 个人简历</title>
+    <style>
+        /* ================= 基础变量与重置 ================= */
+        :root {
+            --primary-color: #4A90E2; /* 浅蓝色 */
+            --secondary-color: #50E3C2; /* 浅绿色 */
+            --accent-color: #F5A623; /* 活力橙 */
+            --bg-color: #F8F9FA;
+            --card-bg: #FFFFFF;
+            --text-main: #333333;
+            --text-muted: #666666;
+            --border-color: #EAEAEA;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* ================= 导航栏 ================= */
+        header {
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            overflow-x: auto;
+            scrollbar-width: none; /* 隐藏滚动条 Firefox */
+        }
+        nav::-webkit-scrollbar { display: none; } /* 隐藏滚动条 Chrome/Safari */
+
+        nav ul {
+            display: flex;
+            white-space: nowrap;
+        }
+
+        nav li {
+            margin: 0 10px;
+        }
+
+        nav a {
+            display: block;
+            padding: 18px 20px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 15px;
+            position: relative;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary-color);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+            border-radius: 3px 3px 0 0;
+        }
+
+        nav a.active::after {
+            width: 80%;
+        }
+
+        /* ================= 主体内容区 ================= */
+        main {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            min-height: 70vh;
+        }
+
+        .section-container {
+            display: none;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .section-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 卡片基础样式 */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed var(--border-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 18px;
+            background-color: var(--primary-color);
+            margin-right: 10px;
+            border-radius: 4px;
+        }
+
+        /* 悬浮放大特效 (针对指定的实习) */
+        .hover-scale {
+            transition: var(--transition);
+        }
+        .hover-scale:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-color);
+        }
+
+        /* ================= 1. 首页 / 个人简介 ================= */
+        .profile-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        /* 1寸照片占位 */
+        .avatar-container {
+            width: 25mm;
+            height: 35mm;
+            background-color: #f0f4f8;
+            border-radius: 6px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 20px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border: 2px dashed #d9d9d9;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .avatar-container:hover {
+            border-color: var(--primary-color);
+            background-color: #f0f7ff;
+        }
+
+        .avatar-container input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .avatar-placeholder {
+            color: #a0aec0;
+            font-size: 12px;
+            text-align: center;
+            padding: 5px;
+        }
+        
+        .avatar-placeholder svg {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 5px;
+        }
+
+        #avatar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none; /* 初始隐藏，探测成功后显示 */
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+        }
+
+        .profile-name {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--text-main);
+            margin-bottom: 5px;
+        }
+
+        .profile-tag {
+            background-color: #e3f2fd;
+            color: var(--primary-color);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* ================= 通用条目排版 (工作/教育) ================= */
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 600px) {
+            .item-header { flex-direction: column; }
+            .item-header .date { margin-top: 5px; font-size: 13px; }
+        }
+
+        .item-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .item-subtitle {
+            font-size: 15px;
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .item-date {
+            font-size: 14px;
+            color: var(--text-muted);
+            background: #f1f3f5;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .item-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+        .item-desc p {
+            margin-bottom: 6px;
+            position: relative;
+            padding-left: 15px;
+        }
+        .item-desc p::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        .item-desc .en-text {
+            color: #888;
+            font-size: 13px;
+            padding-left: 15px;
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+
+        /* ================= 媒体上传区 (图片/视频) ================= */
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 15px;
+        }
+        @media (max-width: 600px) {
+            .media-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .media-upload-box {
+            aspect-ratio: 4/3;
+            background-color: #fafafa;
+            border: 2px dashed #d9d9d9;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .media-upload-box:hover {
+            border-color: var(--primary-color);
+            background-color: #f0f7ff;
+        }
+
+        .media-upload-box span {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+            pointer-events: none;
+        }
+        .media-upload-box svg {
+            width: 24px;
+            height: 24px;
+            fill: #bbb;
+            pointer-events: none;
+        }
+
+        .media-upload-box input[type="file"] {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .media-preview {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+            z-index: 2;
+        }
+        
+        .video-box {
+            grid-column: 1 / -1; /* 视频占满整行 */
+            aspect-ratio: 16/9;
+        }
+
+        /* ================= 技能特长 ================= */
+        .skill-group {
+            margin-bottom: 25px;
+        }
+        .skill-group-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-main);
+        }
+        .progress-bar-container {
+            margin-bottom: 12px;
+        }
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        .progress-track {
+            height: 8px;
+            background-color: #eee;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: var(--accent-color);
+            border-radius: 4px;
+        }
+        
+        /* 软技能标签 */
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .skill-tag {
+            background-color: var(--secondary-color);
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* ================= 荣誉/证书 ================= */
+        .honor-list {
+            list-style: none;
+            padding: 0;
+        }
+        .honor-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+        }
+        .honor-list li:last-child {
+            border-bottom: none;
+        }
+        .honor-list li::before {
+            content: '🏆';
+            margin-right: 12px;
+            font-size: 16px;
+        }
+        .honor-name {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- 顶部导航 -->
+    <header>
+        <nav>
+            <ul id="nav-list">
+                <li><a onclick="switchTab('home')" class="" data-target="home">个人简介</a></li>
+                <li><a onclick="switchTab('experience')" data-target="experience" class="active">工作经历</a></li>
+                <li><a onclick="switchTab('education')" data-target="education">教育背景</a></li>
+                <li><a onclick="switchTab('skills')" data-target="skills">技能特长</a></li>
+                <li><a onclick="switchTab('honors')" data-target="honors">证书荣誉</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- 1. 首页 / 个人简介 -->
+        <section id="home" class="section-container">
+            <div class="card profile-header hover-scale">
+                <!-- 预留 1寸照片位置 (25mm x 35mm) -->
+                <div class="avatar-container" title="点击上传/替换头像">
+                    <input type="file" accept="image/*" onchange="previewAvatar(this)">
+                    <!-- CSS 占位符 (未找到图片时显示) -->
+                    <div class="avatar-placeholder">
+                        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg><br>点击上传
+                    </div>
+                    <!-- 动态加载的真实图片 -->
+                    <img id="avatar-img" alt="詹曼证件照" src="avatar.pgn" style="display: block;">
+                </div>
+                
+                <h1 class="profile-name">詹曼 Gemma Zhan</h1>
+                <div class="profile-tag">英语教学 / 翻译 / 运营管理</div>
+                
+                <div class="contact-info">
+                    <div class="contact-item">📱 135-8820-0533</div>
+                    <div class="contact-item">📧 zhanman167@outlook.com</div>
+                    <div class="contact-item">📍 浙江 / 安徽 Zhejiang / Anhui</div>
+                    <div class="contact-item">🎓 录取: 曼彻斯特大学(UoM)</div>
+                </div>
+            </div>
+            
+            <div class="card hover-scale" style="margin-top: 20px;">
+                <h2 class="section-title">自我总结 / Summary</h2>
+                <p style="font-size: 14px; color: var(--text-muted); line-height: 1.8;">
+                    具备扎实的英语专业背景（排名Top 1%），优秀的跨文化交际与口语能力（雅思6.5，专四85分优秀，上海中级口译证书）。在K12英语教学、活动运营及商务翻译方面均拥有丰富的实战经验。工作细致耐心，具备极强的亲和力与组织协调能力。
+                </p>
+            </div>
+        </section>
+
+        <!-- 2. 工作/项目经历 -->
+        <section id="experience" class="section-container active">
+            
+            <!-- 九洲教育 (含媒体上传功能) -->
+            <div class="card hover-scale">
+                <div class="item-header">
+                    <div class="item-title">宣城九洲教育 / Xuancheng Jiuzhou Education</div>
+                    <div class="item-date">2023.07 - 2025.08</div>
+                </div>
+                <div class="item-subtitle">英语实习教师 / English Intern Teacher</div>
+                <div class="item-desc">
+                    <p>负责 K12 阶段英语教学,独立制定教学方案并落地实施。</p>
+                    <div class="en-text">Taught K12 English, independently designed and implemented teaching plans.</div>
+                    <p>具备极强的耐心与沟通能力,有效提升学生学习动机及英语成绩。</p>
+                    <div class="en-text">Demonstrated patience and communication skills, successfully motivating students and improving grades.</div>
+                </div>
+                
+                <!-- 预留四张照片与一个视频位置 -->
+                <div style="font-size: 12px; color: #999; margin-top: 15px;">点击虚线框上传/替换工作实况 (本地预览)</div>
+                <div class="media-grid">
+                    <!-- 视频上传位 -->
+                    <div class="media-upload-box video-box">
+                        <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"></path></svg>
+                        <span>添加视频 / Add Video</span>
+                        <input type="file" accept="video/*" onchange="previewMedia(this, 'video')">
+                        <video class="media-preview" controls="" src="intro.mp4" style="display: block;"></video>
+                    </div>
+                    <!-- 图片上传位 1-4 -->
+                    <div class="media-upload-box">
+                        <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"></path></svg>
+                        <span>照片 1</span>
+                        <input type="file" accept="image/*" onchange="previewMedia(this, 'image')">
+                        <img class="media-preview" src="blackboard.png" style="display: block;">
+                    </div>
+                    <div class="media-upload-box">
+                        <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"></path></svg>
+                        <span>照片 2</span>
+                        <input type="file" accept="image/*" onchange="previewMedia(this, 'image')">
+                        <img class="media-preview" src="writing.png" style="display: block;">
+                    </div>
+                    <div class="media-upload-box">
+                        <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"></path></svg>
+                        <span>照片 3</span>
+                        <input type="file" accept="image/*" onchange="previewMedia(this, 'image')">
+                        <img class="media-preview" src="teacher.png" style="display: block;">
+                    </div>
+                    <div class="media-upload-box">
+                        <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"></path></svg>
+                        <span>照片 4</span>
+                        <input type="file" accept="image/*" onchange="previewMedia(this, 'image')">
+                        <img class="media-preview" src="class.png" style="display: block;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- RACC 国际制冷展 (含照片上传功能) -->
+            <div class="card hover-scale">
+                <div class="item-header">
+                    <div class="item-title">RACC 国际制冷展 / RACC International Exhibition</div>
+                    <div class="item-date">2024 &amp; 2025.10</div>
+                </div>
+                <div class="item-subtitle">翻译志愿者 / Translation Volunteer</div>
+                <div class="item-desc">
+                    <p>为100+位外宾提供签到及咨询翻译服务,展示了流利的英语口语与跨文化交际能力。</p>
+                    <div class="en-text">Provided translation for 100+ foreign guests, showcasing fluent English speaking and intercultural skills.</div>
+                    <p>匹配夏令营:擅长引导外籍人士及组织集体活动。</p>
+                    <div class="en-text">Ideal for guiding students and international camp activities.</div>
+                </div>
+                <!-- 预留四张照片位置 -->
+                <div class="media-grid">
+                    <div class="media-upload-box">
+                        <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"></path></svg>
+                        <span>现场照片 1</span>
+                        <input type="file" accept="image/*" onchange="previewMedia(this, 'image')">
+                        <img class="media-preview" src="checkin.png" style="display: block;">
+                    </div>
+                    <div class="media-upload-box">
+                        <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"></path></svg>
+                        <span>现场照片 2</span>
+                        <input type="file" accept="image/*" onchange="previewMedia(this, 'image')">
+                        <img class="media-preview" src="checkout.png" style="display: block;">
+                    </div>
+                    <div class="media-upload-box">
+                        <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"></path></svg>
+                        <span>现场照片 3</span>
+                        <input type="file" accept="image/*" onchange="previewMedia(this, 'image')">
+                        <img class="media-preview" src="racc.png" style="display: block;">
+                    </div>
+                    <div class="media-upload-box">
+                        <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"></path></svg>
+                        <span>现场照片 4</span>
+                        <input type="file" accept="image/*" onchange="previewMedia(this, 'image')">
+                        <img class="media-preview" src="raccc.png" style="display: block;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 杭州绿言教育 (悬浮特效) -->
+            <div class="card hover-scale">
+                <div class="item-header">
+                    <div class="item-title">杭州绿言教育 / Hangzhou Luyan Education</div>
+                    <div class="item-date">2025.01 - 2025.02</div>
+                </div>
+                <div class="item-subtitle">运营实习生 / Operation Intern</div>
+                <div class="item-desc">
+                    <p>负责多平台内容运营及二语课程推广,达成10+课程转化。</p>
+                    <div class="en-text">Managed multi-platform content operations and achieved 10+ course conversions.</div>
+                </div>
+            </div>
+
+            <!-- 安徽众诚塑胶科技有限公司 (悬浮特效) -->
+            <div class="card hover-scale">
+                <div class="item-header">
+                    <div class="item-title">安徽众诚塑胶科技有限公司 / Anhui Zhongcheng Plastic Tech.</div>
+                    <div class="item-date">2023.11</div>
+                </div>
+                <div class="item-subtitle">英语口译 / English Interpreter</div>
+                <div class="item-desc">
+                    <p>协助海外客户商务对接,精准口译产品参数及合作细节。</p>
+                    <div class="en-text">Facilitated business meetings with overseas clients through accurate interpretation.</div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- 3. 教育背景 -->
+        <section id="education" class="section-container">
+            <div class="card hover-scale">
+                <div class="item-header">
+                    <div class="item-title">曼彻斯特大学 / The University of Manchester</div>
+                    <div class="item-date">2026.09 - 入学</div>
+                </div>
+                <div class="item-subtitle" style="color: var(--text-main);">硕士录取 / Master Candidate</div>
+            </div>
+
+            <div class="card hover-scale">
+                <div class="item-header">
+                    <div class="item-title">中国计量大学 / China Jiliang University</div>
+                    <div class="item-date">2024.09 - 2026.06</div>
+                </div>
+                <div class="item-subtitle" style="color: var(--text-main);">本科 · 英语专业 / B.A. in English Language &amp; Literature</div>
+                <div class="item-desc">
+                    <p style="padding-left:0;">GPA: 4.92/5.0 | 排名:前1% / Ranking: Top 1%</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. 技能特长 -->
+        <section id="skills" class="section-container">
+            <div class="card">
+                <!-- 硬技能 / 专业技能 -->
+                <div class="skill-group">
+                    <h3 class="skill-group-title">Language &amp; Professional Skills (语言与专业技能)</h3>
+                    
+                    <div class="progress-bar-container">
+                        <div class="progress-info">
+                            <span>IELTS (雅思)</span>
+                            <span>6.5</span>
+                        </div>
+                        <div class="progress-track"><div class="progress-fill" style="width: 75%;"></div></div>
+                    </div>
+
+                    <div class="progress-bar-container">
+                        <div class="progress-info">
+                            <span>TEM-4 (英语专业四级)</span>
+                            <span>85分 (优秀)</span>
+                        </div>
+                        <div class="progress-track"><div class="progress-fill" style="width: 85%;"></div></div>
+                    </div>
+                </div>
+
+                <!-- 软技能标签 -->
+                <div class="skill-group" style="margin-top: 30px;">
+                    <h3 class="skill-group-title">Soft Skills &amp; Competencies (软技能与综合素质)</h3>
+                    <div class="tags-container">
+                        <span class="skill-tag">K12 授课背景</span>
+                        <span class="skill-tag">极具亲和力 / Patience</span>
+                        <span class="skill-tag">跨文化交流 / Intercultural Communication</span>
+                        <span class="skill-tag">流利听说 / Fluent Speaking &amp; Listening</span>
+                        <span class="skill-tag">优秀的组织管理 / Organization</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. 证书/荣誉 -->
+        <section id="honors" class="section-container">
+            <div class="card hover-scale">
+                <h2 class="section-title">专业证书 / Certificates</h2>
+                <ul class="honor-list">
+                    <li><span class="honor-name">上海中级口译证书 (SIA Intermediate Level)</span></li>
+                    <li><span class="honor-name">雅思 IELTS 6.5</span></li>
+                    <li><span class="honor-name">英语专业四级 TEM-4 (85分 优秀)</span></li>
+                </ul>
+            </div>
+
+            <div class="card hover-scale">
+                <h2 class="section-title">奖学金与荣誉 / Scholarships &amp; Awards</h2>
+                <ul class="honor-list">
+                    <li><span class="honor-name">国家奖学金 (National Scholarship)</span></li>
+                    <li><span class="honor-name">浙江省省政府奖学金 (Zhejiang Provincial Government Scholarship)</span></li>
+                    <li><span class="honor-name">浙江省优秀毕业生 (Outstanding Graduate of Zhejiang Province)</span></li>
+                    <li><span class="honor-name">校级一等奖学金 (University First-class Scholarship)</span></li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // ================= 1. 栏目切换逻辑 =================
+        function switchTab(tabId) {
+            // 隐藏所有 section
+            const sections = document.querySelectorAll('.section-container');
+            sections.forEach(sec => {
+                sec.classList.remove('active');
+            });
+
+            // 移除所有 nav 的 active 状态
+            const navLinks = document.querySelectorAll('#nav-list a');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // 激活当前选中的 section 和 nav
+            document.getElementById(tabId).classList.add('active');
+            document.querySelector(`nav a[data-target="${tabId}"]`).classList.add('active');
+        }
+
+        // ================= 2. 头像加载优先级探测函数 =================
+        /*
+          要求：尝试按顺序加载 avatar.png -> avatar.jpg -> avatar.jpeg
+          如果本地同级目录下存在其中任一文件，则立即显示并停止探测。
+          若都不存在，则保留 CSS 美观的占位符。
+        */
+        function detectAvatar() {
+            const extensions = ['png', 'jpg', 'jpeg'];
+            let currentIndex = 0;
+            const avatarImg = document.getElementById('avatar-img');
+
+            function tryNextImage() {
+                if (currentIndex >= extensions.length) {
+                    // 所有格式均尝试失败，不操作，保留默认 CSS 占位样式
+                    return;
+                }
+                
+                const testUrl = `avatar.${extensions[currentIndex]}`;
+                const img = new Image();
+                
+                img.onload = function() {
+                    // 加载成功，设置 src 并显示
+                    avatarImg.src = testUrl;
+                    avatarImg.style.display = 'block';
+                };
+                
+                img.onerror = function() {
+                    // 加载失败，尝试下一个格式
+                    currentIndex++;
+                    tryNextImage();
+                };
+                
+                img.src = testUrl;
+            }
+
+            tryNextImage();
+        }
+
+        // ================= 3. 本地媒体上传与预览 =================
+        /*
+          允许用户点击虚线框上传图片或视频，并在原位置本地预览。
+          通过 URL.createObjectURL 实现，安全且无刷新限制（仅本地浏览器临时可见）。
+        */
+        function previewMedia(inputElement, type) {
+            if (inputElement.files && inputElement.files[0]) {
+                const file = inputElement.files[0];
+                const objectUrl = URL.createObjectURL(file);
+                const parentBox = inputElement.parentElement;
+                
+                // 查找当前框内的预览元素 (img 或 video)
+                let previewElement = parentBox.querySelector('.media-preview');
+                
+                if (previewElement) {
+                    previewElement.src = objectUrl;
+                    previewElement.style.display = 'block';
+                    
+                    // 为了内存管理，释放旧的 URL (此处为简化直接替换)
+                    previewElement.onload = function() {
+                        URL.revokeObjectURL(previewElement.src); // 仅适用于 img
+                    }
+                }
+            }
+        }
+
+        // ================= 4. 头像本地上传预览 =================
+        function previewAvatar(inputElement) {
+            if (inputElement.files && inputElement.files[0]) {
+                const file = inputElement.files[0];
+                const objectUrl = URL.createObjectURL(file);
+                const avatarImg = document.getElementById('avatar-img');
+                
+                avatarImg.src = objectUrl;
+                avatarImg.style.display = 'block';
+                
+                avatarImg.onload = function() {
+                    URL.revokeObjectURL(avatarImg.src);
+                }
+            }
+        }
+
+        // 页面加载完成后执行头像探测
+        window.addEventListener('DOMContentLoaded', () => {
+            detectAvatar();
+        });
+    </script>
+
+</body></html>
